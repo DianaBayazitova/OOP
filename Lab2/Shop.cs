@@ -129,5 +129,4 @@ namespace Lab2
             return index;
         }
     }
-
 }
