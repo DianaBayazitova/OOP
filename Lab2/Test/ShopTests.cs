@@ -61,11 +61,11 @@ namespace Lab2.Tests
                 shop2
             };
 
-            Assert.AreEqual(2, Shop.ShopWithCheapestProduct(shops, "BEATS Urbeats3"));
+            ShopManager shopManager = new ShopManager(shops);
+
+            Assert.AreEqual(2, shopManager.ShopWithCheapestProduct("BEATS Urbeats3"));
             Assert.AreEqual(23905930.35, shop.BuyProducts(products));
-            Assert.AreEqual(0, Shop.BuyCheapestProducts(shops, products));
-
-
+            Assert.AreEqual(0, shopManager.ShopWithCheapestConsignmentOfProducts(products));
 
         }
     }
