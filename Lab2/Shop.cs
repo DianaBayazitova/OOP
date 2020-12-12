@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Lab2
@@ -21,50 +21,27 @@ namespace Lab2
         {
             return _index;
         }
+        
+        public List<Product> GetProducts()
+        {
+            return _products;
+        }
 
         public void AddProducts(List<Product> new_products)
         {
             foreach(Product product in new_products)
             {
-                int k = 0;
-                foreach(Product old_product in _products)
+                Product old_product = _products.Find(item => item.GetName() == product.GetName());
+                if (old_product != null)
                 {
-                    if (old_product.GetName() == product.GetName())
-                    {
-                        old_product.IncQuantity(product.GetQuantity());
-                        old_product.SetPrice(product.GetPrice());
-                        break;
-                    }
-                    k++;
+                    old_product.IncQuantity(product.GetQuantity());
+                    old_product.SetPrice(product.GetPrice());
                 }
-                if (k == _products.Count)
+                else
                 {
                     _products.Add(product);
                 }
             }
-        }
-
-        public static int ShopWithCheapestProduct(List<Shop> shops, string product_name)
-        {
-            double min = double.MaxValue;
-            int index_min = -1;
-            foreach (var shop in shops)
-            {
-                foreach (var product in shop._products)
-                {
-                    if (product.GetName() == product_name)
-                    {
-                        if (min > product.GetPrice())
-                        {
-                            index_min = shop._index;
-                            min = product.GetPrice();
-                        }
-                        break;
-                    }
-                }
-            }
-
-            return index_min;
         }
 
         public Dictionary<string, int> ProductsForAmount(double amount)
@@ -111,22 +88,6 @@ namespace Lab2
                 }
             }
             return cost;
-        }
-
-        public static int BuyCheapestProducts(List<Shop> shops, List<Product> products)
-        {
-            double min_cost = double.MaxValue;
-            int index = 0;
-            foreach (var shop in shops)
-            {
-                double cost = shop.BuyProducts(products);
-                if (cost < min_cost && Math.Abs(cost) > double.Epsilon)
-                {
-                    index = shop._index;
-                    min_cost = cost;
-                }
-            }
-            return index;
         }
     }
 }
